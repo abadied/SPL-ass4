@@ -30,18 +30,31 @@ def main(args):
                 index = 0
                 for line in inputfile:
                     input_array = line.split(',')
-                    if input_array[0] == "room":
-                        cursor.execute("INSERT INTO Rooms VALUES(?)", (input_array[1],))
-                        if len(input_array)  > 3:
-                            cursor.execute("INSERT INTO Residents VALUES(? , ? , ?)", (input_array[1],input_array[2], input_array[3]))
-                                                                                       
-
-                    if input_array[0] == "breakfast" or "wakeup":
+                    if input_array[0] == "breakfast" :
+			print input_array[0]
+			print input_array[1]
                         cursor.execute("INSERT INTO TaskTimes VALUES(? , ? ,?)", (index, input_array[1], input_array[3],))
                         cursor.execute("INSERT INTO Tasks VALUES(? , ? ,?)",(index, input_array[0], input_array[2]))
                         index += 1
                         
-                    if input_array[0] == "clean":
+                    elif input_array[0] == "room":
+                        cursor.execute("INSERT INTO Rooms VALUES(?)", (input_array[1],))
+                        if len(input_array)  > 3:
+                            cursor.execute("INSERT INTO Residents VALUES(? , ? , ?)", (input_array[1],input_array[2], input_array[3]))
+                                                                                       
+			
+                    elif input_array[0] == "breakfast" :
+			print input_array[0]
+			print input_array[1]
+                        cursor.execute("INSERT INTO TaskTimes VALUES(? , ? ,?)", (index, input_array[1], input_array[3],))
+                        cursor.execute("INSERT INTO Tasks VALUES(? , ? ,?)",(index, input_array[0], input_array[2]))
+                        index += 1
+			
+
+			
+		
+                    elif input_array[0] == "clean":
+			
                         cursor.execute("INSERT INTO TaskTimes VALUES(? , ? ,?)", (index, input_array[1], input_array[2],))
                         cursor.execute("INSERT INTO Tasks VALUES(? , ? ,?)",(index, input_array[0], 0,))
                         index += 1
