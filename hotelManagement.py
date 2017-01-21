@@ -30,9 +30,7 @@ def main(args):
                 index = 0
                 for line in inputfile:
                     input_array = line.split(',')
-                    if input_array[0] == "breakfast" :
-			print input_array[0]
-			print input_array[1]
+                    if input_array[0] == "wakeup" :
                         cursor.execute("INSERT INTO TaskTimes VALUES(? , ? ,?)", (index, input_array[1], input_array[3],))
                         cursor.execute("INSERT INTO Tasks VALUES(? , ? ,?)",(index, input_array[0], input_array[2]))
                         index += 1
@@ -44,8 +42,6 @@ def main(args):
                                                                                        
 			
                     elif input_array[0] == "breakfast" :
-			print input_array[0]
-			print input_array[1]
                         cursor.execute("INSERT INTO TaskTimes VALUES(? , ? ,?)", (index, input_array[1], input_array[3],))
                         cursor.execute("INSERT INTO Tasks VALUES(? , ? ,?)",(index, input_array[0], input_array[2]))
                         index += 1
