@@ -4,8 +4,8 @@ import sys
 
 
 def main(args):
-    databaseexisted = os.path.isfile("cronhoteldb.db")
-    dbcon = sqlite3.connect("cronhoteldb.db")
+    databaseexisted = os.path.isfile('cronhoteldb.db')
+    dbcon = sqlite3.connect('cronhoteldb.db')
     with dbcon:
         cursor = dbcon.cursor()
         if not databaseexisted:
@@ -15,7 +15,7 @@ def main(args):
             cursor.execute("CREATE TABLE TaskTimes (TaskId integer PRIMARY KEY NOT NULL,"
                            " DoEvery integer NOT NULL,NumTimes integer NOT NULL)")
             # create table TaskTimes
-            cursor.execute("CREATE TABLE Tasks (TaskId integer NOT NULL REFERENCES TaskTimes(TAskId),"
+            cursor.execute("CREATE TABLE Tasks (TaskId integer NOT NULL REFERENCES TaskTimes(TaskId),"
                            " TaskName text NOT NULL,Parameter integer)")
             # create table TaskTimes
             cursor.execute("CREATE TABLE Rooms (RoomNumber integer PRIMARY KEY NOT NULL)")
