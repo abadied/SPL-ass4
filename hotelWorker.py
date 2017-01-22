@@ -33,7 +33,7 @@ def dohoteltask(taskname, parameter):
         elif taskname == "clean":
             cursor.execute("SELECT * FROM Rooms")
             rooms = cursor.fetchall()
-            cursor.execute("SELECT TaskId FROM Tasks WHERE TaskName=(?) AND Parameter=(?)",(taskname,parameter,))
+            cursor.execute("SELECT TaskId FROM Tasks WHERE TaskName=(?) AND Parameter=(?)",(taskname,),(parameter,))
             taskid = cursor.fecthone()
             cursor.execute("UPDATE TaskTimes SET NumTimes = NumTimes -1 WHERE TaskId = (?)", (taskid,))
             string_rooms = ""
@@ -43,4 +43,4 @@ def dohoteltask(taskname, parameter):
             print("Rooms ", string_rooms, " cleaned at ", print_time)
             return print_time
 
-
+dohoteltask("clean" , 2)
