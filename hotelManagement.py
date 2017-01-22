@@ -6,6 +6,7 @@ import sys
 def main(args):
     databaseexisted = os.path.isfile('cronhoteldb.db')
     dbcon = sqlite3.connect('cronhoteldb.db')
+    dbcon.text_factory = bytes
     with dbcon:
         cursor = dbcon.cursor()
         if not databaseexisted:
@@ -29,26 +30,28 @@ def main(args):
             with open(inputconfilname) as inputfile:
                 index = 0
                 for line in inputfile:
+                    line = line.rstrip('\n')
+                    line = line.rstrip(' ')
                     input_array = line.split(',')
                     if input_array[0] == "wakeup" :
-                        cursor.execute("INSERT INTO TaskTimes VALUES(? , ? ,?)", (index, input_array[1], input_array[3]))
-                        cursor.execute("INSERT INTO Tasks VALUES(? , ? ,?)",(index, input_array[0], input_array[2]))
+                        cursor.execute("INSERT INTO TaskTimes VALUES(?,?,?)", (index, input_array[1], input_array[3]))
+                        cursor.execute("INSERT INTO Tasks VALUES(?,?,?)",(index, input_array[0], input_array[2]))
                         index += 1
                         
                     elif input_array[0] == "room":
                         cursor.execute("INSERT INTO Rooms VALUES(?)", (input_array[1],))
                         if len(input_array)  > 3:
-                            cursor.execute("INSERT INTO Residents VALUES(? , ? , ?)", (input_array[1],input_array[2], input_array[3]))
+                            cursor.execute("INSERT INTO Residents VALUES(?,?,?)", (input_array[1],input_array[2], input_array[3]))
                                                                                        
 			
                     elif input_array[0] == "breakfast" :
-                        cursor.execute("INSERT INTO TaskTimes VALUES(? , ? ,?)", (index, input_array[1], input_array[3]))
-                        cursor.execute("INSERT INTO Tasks VALUES(? , ? ,?)",(index, input_array[0], input_array[2]))
+                        cursor.execute("INSERT INTO TaskTimes VALUES(?,?,?)", (index, input_array[1], input_array[3]))
+                        cursor.execute("INSERT INTO Tasks VALUES(?,?,?)",(index, input_array[0], input_array[2]))
                         index += 1
 
                     elif input_array[0] == "clean":
-                        cursor.execute("INSERT INTO TaskTimes VALUES(? , ? ,?)", (index, input_array[1], input_array[2]))
-                        cursor.execute("INSERT INTO Tasks VALUES(? , ? ,?)",(index, input_array[0], 0))
+                        cursor.execute("INSERT INTO TaskTimes VALUES(?,?,?)", (index, input_array[1], input_array[2]))
+                        cursor.execute("INSERT INTO Tasks VALUES(?,?,?)",(index, input_array[0], 0))
                         index += 1
 
 if __name__ == '__main__':
