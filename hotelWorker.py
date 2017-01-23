@@ -33,7 +33,8 @@ def dohoteltask(taskname, parameter):
                            "FROM Rooms "
                            "LEFT JOIN Residents "
                            "ON Rooms.RoomNumber = Residents.RoomNumber "
-                           "WHERE Residents.FirstName IS NULL")
+                           "WHERE Residents.FirstName IS NULL "
+                           "ORDER BY Rooms.RoomNumber ASC")
             rooms = cursor.fetchall()
             
             string_rooms = ""
@@ -43,5 +44,6 @@ def dohoteltask(taskname, parameter):
             print_time = time.time()
             print "Rooms", string_rooms[:-2], "cleaned at", print_time
             return print_time
-
+    dbcon.commit()
+    dbcon.close()
 

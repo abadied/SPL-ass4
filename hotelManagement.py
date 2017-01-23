@@ -68,6 +68,9 @@ def main(args):
                         cursor.execute("INSERT INTO Tasks "
                                        "VALUES(?,?,?)",(index, input_array[0], 0,))
                         index += 1
+    dbcon.commit()
+    dbcon.close()
+
 
 if __name__ == '__main__':
     main(sys.argv)

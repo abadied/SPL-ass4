@@ -4,8 +4,9 @@ import os
 import time
 
 
-databaseexisted = os.path.isfile('cronhoteldb.db')
-dbcon = sqlite3.connect('cronhoteldb.db')
+dbcon = None
+if os.path.isfile('cronhoteldb.db'):
+    dbcon = sqlite3.connect('cronhoteldb.db')
 
 
 def deduceNumTimes(taskid):
@@ -32,15 +33,15 @@ def checkTasksToExecute(lastUpdated):
                 deduceNumTimes(task[0])  # update number of times left to execute this task
         return True
 
-
-start_time = time.time()
-curr_time = start_time
-lastUpdated = -1
-moretasks = True
-while moretasks:
-    curr_time = time.time()
-    newUpdated = int(curr_time - start_time)  # get time in round seconds
-    if newUpdated != lastUpdated:  # if advanced a second
-        lastUpdated = newUpdated  # update last round second
-        moretasks = checkTasksToExecute(lastUpdated)  # run tasks and check if more work is due
-
+if dbcon != None:
+    start_time = time.time()
+    curr_time = start_time
+    lastUpdated = -1
+    moretasks = True
+    while moretasks:
+        curr_time = time.time()
+        newUpdated = int(curr_time - start_time)  # get time in round seconds
+        if newUpdated != lastUpdated:  # if advanced a second
+            lastUpdated = newUpdated  # update last round second
+            moretasks = checkTasksToExecute(lastUpdated)  # run tasks and check if more work is due
+    dbcon.close()
